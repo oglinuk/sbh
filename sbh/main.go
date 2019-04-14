@@ -7,6 +7,8 @@ import (
     "strings"
     "crypto/sha256"
     "encoding/hex"
+    "math"
+    "math/rand"
 )
 
 func main() {
@@ -15,14 +17,18 @@ func main() {
 
 // Initialize -> execute on start
 func init() {
-  print("\033[H\033[2J") // clear terminal
+  //print("\033[H\033[2J") // clear terminal
   nCiphers := getIntValue("Number of Ciphers")
   plainText := getPlainText()
-  for i := 0; i < nCiphers; i++ {
-    rot := getIntValue("Rotation: ")
+  seed := getIntValue("Seed")
+  rand.Seed(seed)
+  for i := 0; i < int(nCiphers); i++ {
+    rot := rand.Intn(math.MaxInt64)
+    fmt.Printf("Rot: %s\n", rot)
+    //rand.Seed(int64(rot)) - PASS ROT AND CHANGE SEED EVERY LOOP
     plainText = getSBH(plainText, rot)
   }
-  print("\033[H\033[2J")
+  //print("\033[H\033[2J")
   fmt.Printf("SBH: %s\n", plainText)
 }
 
@@ -48,8 +54,8 @@ func getPlainText() string {
 }
 
 // One-off util func for getting user input of int variables -> takes the context of the variable
-func getIntValue(context string) int {
-  var i int
+func getIntValue(context string) int64 {
+  var i int64
   fmt.Printf("%s: ", context)
   fmt.Scan(&i)
   return i
