@@ -22,6 +22,10 @@ SBH: 196a7f528702e5ca85cd0ac664843cfb4bdd615ce5bc384d60db65ee20a30fb2
 Elapsed time: 1.593898ms
 ```
 
+### W/ Docker
+docker build -t go-sbh .
+docker run go-sbh /bin/bash -c "./go-sbh -pt test -nr 1729 -s 42"
+
 ## Todo
 * Create a gRPC microservice
 * Add different hashing options

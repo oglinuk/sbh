@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"./sbh"
+	"github.com/OGLinuk/go-sbh/sbh"
 )
 
 var (
