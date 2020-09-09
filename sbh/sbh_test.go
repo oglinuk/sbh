@@ -17,30 +17,30 @@ func benchmarkSBH(nRots int64, b *testing.B) {
 	}
 }
 
-func BenchmarkSBH100(b *testing.B) {
+func BenchmarkSBH100Rots(b *testing.B) {
 	benchmarkSBH(100, b)
 }
 
-func BenchmarkSBH1000(b *testing.B) {
+func BenchmarkSBH1000Rots(b *testing.B) {
 	benchmarkSBH(1000, b)
 }
 
-func BenchmarkSBH10000(b *testing.B) {
+func BenchmarkSBH10000Rots(b *testing.B) {
 	benchmarkSBH(10000, b)
 }
 
-func BenchmarkSBH100000(b *testing.B) {
+func BenchmarkSBH100000Rots(b *testing.B) {
 	benchmarkSBH(100000, b)
 }
 
-func BenchmarkSBH1000000(b *testing.B) {
+func BenchmarkSBH1000000Rots(b *testing.B) {
 	benchmarkSBH(1000000, b)
 }
 
-func BenchmarkSBH10000000(b *testing.B) {
+func BenchmarkSBH10000000Rots(b *testing.B) {
 	benchmarkSBH(10000000, b)
 }
 
-func BenchmarkSBH100000000(b *testing.B) {
+func BenchmarkSBH100000000Rots(b *testing.B) {
 	benchmarkSBH(100000000, b)
 }

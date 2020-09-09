@@ -15,13 +15,13 @@ const (
 	SYMBOLS = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 )
 
-// Generate applies a caesarCipher with a random rot
-// based on given seed for nRots and returns a sha256 hash
+// Generate a sha256 hash using a caesarCipher with a
+// random rot based on given seed for nRots
 func Generate(plainText string, nRots, seed int64) string {
 	rand.Seed(seed)
 	for i := 0; i < int(nRots); i++ {
 		rot := rand.Intn(math.MaxInt64)
-		plainText = caesarCipher(plainText, rot)
+		plainText = caesarCipher(rot, plainText)
 	}
 	hasher := sha256.New()
 	hasher.Write([]byte(plainText))
@@ -29,7 +29,7 @@ func Generate(plainText string, nRots, seed int64) string {
 }
 
 // caesarCipher applies a (r)otation to each character of given (s)tring
-func caesarCipher(s string, r int) string {
+func caesarCipher(r int, s string) string {
 	encryptedStr := []string{}
 	s = strings.TrimSpace(s)
 

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
+	"os"
 	"net/http"
 	"strconv"
 	"time"
@@ -11,28 +13,28 @@ import (
 )
 
 var (
-	plainText = flag.String("pt", "", "Plaintext to encode")
-	nRots     = flag.Int64("nr", 0, "Number of rotations to apply")
-	seed      = flag.Int64("s", 0, "Seed for random int generation")
-	web       = flag.Bool("w", false, "Serve SBH over http")
+	web = flag.Bool("w", false, "Serve SBH over http")
 )
 
-func main() {
-	flag.Parse()
+func SBH() {
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Printf("Plaintext: ")
+	scanner.Scan()
+	plainText := scanner.Text()
 
-	print("\033[H\033[2J") //clear terminal
+	var nRots int64
+	fmt.Printf("Number of Rotations: ")
+	fmt.Scan(&nRots)
 
-	if *plainText != "" && *nRots != 0 && *seed != 0 {
-		sTime := time.Now()
-		fmt.Printf("SBH: %s\nElapsed time: %v\n",
-			sbh.Generate(*plainText, *nRots, *seed), time.Since(sTime))
-	} else if *web {
-		http.HandleFunc("/sbh", serveSBH)
-		fmt.Println("Starting server on 9001 ...")
-		http.ListenAndServe("0.0.0.0:9001", nil)
-	} else {
-		fmt.Println("Please provide a flag. For more information use -h")
-	}
+	var seed int64
+	fmt.Printf("Seed: ")
+	fmt.Scan(&seed)
+	
+	print("\033[H\033[2J")
+
+	sTime := time.Now()
+	fmt.Printf("SBH: %s\nElapsed time: %v\n",
+		sbh.Generate(plainText, nRots, seed), time.Since(sTime))
 }
 
 // <IP Address>:9001/sbh?plaintext=test&nrots=1729&seed=42
@@ -52,3 +54,18 @@ func serveSBH(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, fmt.Sprintf("SBH: %s\nElapsed time: %v",
 		sbh.Generate(pt, nr, s), time.Since(sTime)))
 }
+
+func main() {
+	flag.Parse()
+
+	print("\033[H\033[2J") //clear terminal
+
+	if *web {
+		http.HandleFunc("/sbh", serveSBH)
+		fmt.Println("Starting server on 9001 ...")
+		http.ListenAndServe("0.0.0.0:9001", nil)
+	} else {
+		SBH()
+	}
+}
+

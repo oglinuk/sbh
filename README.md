@@ -1,33 +1,42 @@
-# Golang SaltBaeHash
+# Golang SecurityBaeHash
 
 ## Example 
 
-### W/ CLI
+### Normal
+
+`./go-sbh`
 
 ```
-./main -pt test -nr 1729 -s 42
-
-SBH: 196a7f528702e5ca85cd0ac664843cfb4bdd615ce5bc384d60db65ee20a30fb2
-Elapsed time: 1.540469ms
+Plaintext: test
+Number of Rotations: 1729
+Seed: 42
 ```
 
 ### W/ Web
 
-```
-./main -w
+`./go-sbh -w`
 
-http://localhost:9001/sbh?plaintext=test&nrots=1729&seed=42
+goto http://localhost:9001/sbh?plaintext=test&nrots=1729&seed=42
 
-SBH: 196a7f528702e5ca85cd0ac664843cfb4bdd615ce5bc384d60db65ee20a30fb2
-Elapsed time: 1.593898ms
-```
+---
 
 ### W/ Docker
-docker build -t go-sbh .
-docker run go-sbh /bin/bash -c "./go-sbh -pt test -nr 1729 -s 42"
+
+`docker build -t go-sbh .`
+
+then
+
+`docker run -it go-sbh`
+
+or
+
+`docker run go-sbh /bin/bash -c "./go-sbh -w"`
+
+---
 
 ## Todo
-* Create a gRPC microservice
-* Add different hashing options
-* Dockerize
-* Optimize
+* [X] Dockerize
+* [ ] Create a gRPC microservice
+* [ ] Add different hashing options
+* [ ] Add ability to add uppercase letters and/or symbols
+* [ ] Change from `"math/rand"` to `"crypto/rand"`
