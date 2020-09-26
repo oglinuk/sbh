@@ -4,7 +4,7 @@
 
 ### Normal
 
-`./go-sbh`
+`make` && `./go-sbh`
 
 ```
 Plaintext: test
@@ -14,7 +14,7 @@ Seed: 42
 
 ### W/ Web
 
-`./go-sbh -w`
+`make` && `./go-sbh -w`
 
 goto http://localhost:9001/sbh?plaintext=test&nrots=1729&seed=42
 
@@ -22,15 +22,11 @@ goto http://localhost:9001/sbh?plaintext=test&nrots=1729&seed=42
 
 ### W/ Docker
 
-`docker build -t go-sbh .`
-
-then
-
-`docker run -it go-sbh`
+`make docker`
 
 or
 
-`docker run go-sbh /bin/bash -c "./go-sbh -w"`
+`make docker-web`
 
 ---
 
