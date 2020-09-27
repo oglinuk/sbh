@@ -12,6 +12,38 @@ Number of Rotations: 1729
 Seed: 42
 ```
 
+### W/ Uppercase Letter(s)
+
+`make` && `./go-sbh -u`
+
+```
+Plaintext: test
+Number of Rotations: 1729
+Seed: 42
+```
+
+### W/ Specified Number of Uppercase Letters
+
+`make` && `./go-sbh -u -ut 3`
+
+```
+Plaintext: test
+Number of Rotations: 1729
+Seed: 42
+```
+
+### W/ Symbol(s)
+
+Note: Some combinations (like "!@") cause an error. Need to fix.
+
+`make` && `./go-sbh -s "!"`
+
+```
+Plaintext: test
+Number of Rotations: 1729
+Seed: 42
+```
+
 ### W/ Web
 
 `make` && `./go-sbh -w`
