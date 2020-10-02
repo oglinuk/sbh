@@ -57,8 +57,6 @@ func SBH() {
 		hash, time.Since(sTime))
 }
 
-// <IP Address>:9001/sbh?plaintext=test&nrots=1729&seed=42
-// TODO: Update to include ability to make runes uppercase and add symbols
 func serveSBH(w http.ResponseWriter, r *http.Request) {
 	algorithm := r.FormValue("algorithm")
 	plaintext := r.FormValue("plaintext")
