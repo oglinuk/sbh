@@ -20,15 +20,15 @@ Elapsed time: 1.604004ms
 
 ### W/ Specified Hashing Algorithm
 
-`make` && `./go-sbh -a fnv128`
+`make` && `./go-sbh -a sha512_256`
 
 ```
 Plaintext: test
 Number of Rotations: 1729
 Seed: 42
 
-SBH: 69fe1fcd8f757277b806e9a24141fdce
-Elapsed time: 1.569591ms
+SBH: 6a19b273eb219d0617b5e81aec263b84186aab22764b0d38890eda3868a4ba1f
+Elapsed time: 2.096366ms
 ```
 
 ---
