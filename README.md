@@ -1,10 +1,10 @@
-# Golang SecurityBaeHash
+# SecurityBaeHash
 
 ## Example 
 
 ### Normal
 
-`make` && `./go-sbh`
+`make` && `./sbh`
 
 ```
 Plaintext: test
@@ -20,7 +20,7 @@ Elapsed time: 1.604004ms
 
 ### W/ Specified Hashing Algorithm
 
-`make` && `./go-sbh -a sha512_256`
+`make` && `./sbh -a sha512_256`
 
 ```
 Plaintext: test
@@ -35,7 +35,7 @@ Elapsed time: 2.096366ms
 
 ### W/ Uppercase Letter(s)
 
-`make` && `./go-sbh -u`
+`make` && `./sbh -u`
 
 ```
 Plaintext: test
@@ -50,7 +50,7 @@ Elapsed time: 3.053907ms
 
 ### W/ Specified Number of Uppercase Letters
 
-`make` && `./go-sbh -u -ut 3`
+`make` && `./sbh -u -ut 3`
 
 ```
 Plaintext: test
@@ -67,7 +67,7 @@ Elapsed time: 3.468862ms
 
 Note: Some combinations (like "!@") cause an error. Need to fix.
 
-`make` && `./go-sbh -s "!"`
+`make` && `./sbh -s "!"`
 
 ```
 Plaintext: test
@@ -82,7 +82,7 @@ Elapsed time: 1.429811ms
 
 ### W/ Web
 
-`make` && `./go-sbh -w`
+`make` && `./sbh -w`
 
 goto:
 

@@ -1,3 +1,3 @@
-module github.com/OGLinuk/go-sbh
+module github.com/OGLinuk/sbh
 
 go 1.15

@@ -1,7 +1,7 @@
 FROM golang:1.15.0
-ADD . /go/src/go-sbh
-WORKDIR /go/src/go-sbh
+ADD . /go/src/sbh
+WORKDIR /go/src/sbh
 RUN go get
-RUN go build -o go-sbh .
+RUN go build -o sbh .
 EXPOSE 9001
-CMD ["./go-sbh"]
+CMD ["./sbh"]
