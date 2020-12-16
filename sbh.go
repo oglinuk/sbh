@@ -89,7 +89,6 @@ func Generate(secbaehash SBH) string {
 	hasher.Write([]byte(secbaehash.Plaintext))
 	hash := hex.EncodeToString(hasher.Sum(nil))
 
-	// TODO: Change a rune to uppercase based on seed or rotation given rather than the first rune that IsLetter
 	if secbaehash.Uppercase {
 		for _, r := range hash {
 			if unicode.IsLetter(r) {
@@ -99,8 +98,6 @@ func Generate(secbaehash SBH) string {
 		}
 	}
 
-	// TODO: Either figure out why certain combinations cause errors or change how to get symbols
-	// Also need to figure out how to append the symbols in pseudo-random (same based on seed) places
 	if secbaehash.Symbols != "" {
 		hash += secbaehash.Symbols
 	}

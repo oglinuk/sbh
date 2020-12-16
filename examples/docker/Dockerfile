@@ -4,4 +4,3 @@ WORKDIR /go/src/sbh
 RUN go get
 RUN go build -o sbh .
 EXPOSE 9001
-CMD ["./sbh"]
