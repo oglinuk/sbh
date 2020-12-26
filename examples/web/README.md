@@ -2,9 +2,13 @@
 
 ## How to Use
 
-`go build` && `./sbh`
+### Web UI
 
-goto:
+`make` && `./web`
+
+goto `localhost:9001`
+
+### REST API
 
 `http://localhost:9001/sbh?algorithm=&plaintext=test&nrots=1729&seed=42&uppercase=false&uptimes=0&symbols=`
 

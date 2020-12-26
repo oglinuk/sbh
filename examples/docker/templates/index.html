@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ template "header" }}
+
+<body>
+	<div class="container-fluid">
+		<form method="POST">
+			<div class="row">
+				<div class="column">
+					<label for="plaintext"><b>Plaintext:</b></label><br>
+					<input type="text" placeholder="test" name="plaintext">
+					<br>
+					<br>
+					<label for="nrots"><b>Number of Rotations:</b></label><br>
+					<input type="text" placeholder="1729" name="nrots">
+					<br>
+					<br>
+					<label for="seed"><b>Seed:</b></label><br>
+					<input type="text" placeholder="42" name="seed">
+					<br>
+					<br>
+					<label for="algorithm"><b>Algorithm:</b></label>
+					<select name="algorithm">
+						<option value="sha256">sha256</option>
+						<option value="sha256_224">sha256_224</option>
+						<option value="sha512_224">sha512_224</option>
+						<option value="sha512_256">sha512_256</option>
+						<option value="sha512_384">sha512_384</option>
+						<option value="sha512">sha512</option>
+					</select>
+				</div>
+				<div class="column" style="padding-left: 1.5%;">
+					<label for="symbols"><b>(Optional) Symbol(s):</b></label><br>
+					<input type="text" placeholder="!" name="symbols">
+					<br>
+					<br>
+					<br>
+					<label for="uppercase"><b>(Optional) Add Uppercase:</b></label>
+					<input type="checkbox" name="uppercase">
+					<br>
+					<br>
+					<br>
+					<label for="uptimes"><b>(Optional) Number of uptimes:</b></label><br>
+					<input type="text" placeholder="1" name="uptimes">
+				</div>
+			</div>
+			<br>
+			<input type="submit">
+		</form>
+		<br>
+        <br>
+        <a href="https://git.sr.ht/~oglinuk/sbh">SBH</a>: {{ .SBH }}
+        <br>
+        <a href="https://en.wikipedia.org/wiki/Time_complexity">Time complexity</a>: <b>{{ .TimeComplexity }}</b>
+        <br>
+	</div>
+</body>
+
+</html>

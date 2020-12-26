@@ -3,7 +3,6 @@
 ## TODO
 
 * [X] Create CLI implementation
-* [X] Create web querystring implementation
 * [X] Create docker implementation
-* [ ] Create REST API implementation
-* [ ] Create web UI implementation
+* [X] Create web UI implementation
+* [X] Create REST API implementation

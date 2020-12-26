@@ -2,7 +2,7 @@ cli: build
 	docker run -it --name sbh-docker sbh:0.1.0 /bin/bash -c "./sbh"
 
 web: build
-	docker run --name sbh-docker sbh:0.1.0 /bin/bash -c "./sbh -w"
+	docker run -p 9001:9001 --name sbh-docker sbh:0.1.0 /bin/bash -c "./sbh -w"
 
 build:
 	docker build . -t sbh:0.1.0
