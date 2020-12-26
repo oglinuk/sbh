@@ -5,11 +5,11 @@
 Passwords are the most vital part of everyday life. Any individual can
 have numerous accounts across various applications, and each of those
 accounts has an associated password. Unfortunately as the number of
-accounts/passwords grows, people tend to become lazy and re-use
-passwords. There are existing solutions in the form of password managers,
-like keypassxc or lastpass, but even those require an account/password.
-The issue that I have with password managers is if the master key is
-compromised, then the attackers have the keys to the kingdom.
+accounts/passwords grows, people tend to re-use passwords. There are existing
+solutions in the form of password managers, like keypassxc or lastpass, but
+even those require an account/password. The issue that I have with password
+managers is if the master key is compromised, then the attackers have the keys
+to the kingdom.
 
 SecurityBaeHash (SBH) is a ***stateless password manager***, meaning it doesnt
 retain any information. It doesnt require an account, doesnt store any
@@ -29,6 +29,12 @@ then generates a hash based on the result of applying X psuedo-randomly
 generated rotations (0 < n < 9223372036854775807) to the plaintext, where
 X is the specified number of rotations. The resulting hash is then used
 as the password.
+
+---
+
+## Examples
+
+See the [examples](examples) directory.
 
 ---
 
