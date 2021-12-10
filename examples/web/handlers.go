@@ -7,7 +7,7 @@ import (
 	"text/template"
 	"time"
 
-	"git.sr.ht/~oglinuk/sbh"
+	"github.com/oglinuk/sbh"
 	"github.com/gin-gonic/gin"
 )
 

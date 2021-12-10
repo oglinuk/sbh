@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"git.sr.ht/~oglinuk/sbh"
+	"github.com/oglinuk/sbh"
 )
 
 var (
