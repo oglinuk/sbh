@@ -1,6 +1,8 @@
 package sbh
 
 import (
+	"crypto/md5"
+	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/hex"
@@ -14,9 +16,13 @@ import (
 // LETTERS, DIGITS, and SYMBOLS are the string representations of
 // all possible letters, digits, and symbols (minus some symbols).
 const (
-	LETTERS = "abcdefghijklmnopqrstuvwxyz"
+	LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	DIGITS  = "0123456789"
 	SYMBOLS = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+
+	LLEN = int64(len(LETTERS))
+	DLEN = int64(len(DIGITS))
+	SLEN = int64(len(SYMBOLS))
 )
 
 // SBH is a struct containing all the required parts to create a SBH
@@ -34,6 +40,8 @@ type SBH struct {
 // given algorithm. If a non-existing algorithm is given, default to sha256.
 func getHasher(algorithm string) hash.Hash {
 	hashers := make(map[string]hash.Hash)
+	hashers["md5"] = md5.New()
+	hashers["sha1"] = sha1.New()
 	hashers["sha256_224"] = sha256.New224()
 	hashers["sha256"] = sha256.New()
 	hashers["sha512_224"] = sha512.New512_224()
@@ -53,19 +61,20 @@ func getHasher(algorithm string) hash.Hash {
 }
 
 // caesarCipher applies a (r)otation to each rune of given (s)tring
-func caesarCipher(r int, s string) string {
+func caesarCipher(r int64, s string) string {
 	str := []string{}
 	s = strings.TrimSpace(s)
 
 	for _, runeVal := range s {
+		iRune := int64(runeVal)
 		if unicode.IsLetter(runeVal) {
-			r = (int(runeVal) + r) % len(LETTERS)
+			r = (iRune + r) % LLEN
 			str = append(str, string(LETTERS[r]))
 		} else if unicode.IsDigit(runeVal) {
-			r = (int(runeVal) + r) % len(DIGITS)
+			r = (iRune + r) % DLEN
 			str = append(str, string(DIGITS[r]))
 		} else {
-			r = (int(runeVal) + r) % len(SYMBOLS)
+			r = (iRune + r) % SLEN
 			str = append(str, string(SYMBOLS[r]))
 		}
 	}
@@ -82,7 +91,7 @@ func caesarCipher(r int, s string) string {
 func Generate(secbaehash SBH) string {
 	rand.Seed(secbaehash.Seed)
 	for i := 0; i < int(secbaehash.NRots); i++ {
-		rot := rand.Intn(math.MaxInt64)
+		rot := rand.Int63n(math.MaxInt64)
 		secbaehash.Plaintext = caesarCipher(rot, secbaehash.Plaintext)
 	}
 	hasher := getHasher(secbaehash.Algorithm)

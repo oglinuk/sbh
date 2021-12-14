@@ -11,11 +11,11 @@ even those require an account/password. The issue that I have with password
 managers is if the master key is compromised, then the attackers have the keys
 to the kingdom.
 
-SecurityBaeHash (SBH) is a ***stateless password manager***, meaning it doesnt
-retain any information. It doesnt require an account, doesnt store any
-passwords, and it never will. A password only exists when its retrieved,
-and the same password can only be retrieved with the exact same inputs.
-No keys and no kingdom.
+Security Before anything else Hash (SBH) is a ***stateless password
+manager***, meaning it doesnt retain any information. It doesnt require
+an account, doesnt store any passwords, and it never will. A password
+only exists when its retrieved, and the same password can only be
+retrieved with the exact same inputs. No keys and no kingdom.
 
 ---
 
@@ -35,6 +35,9 @@ as the password.
 ## Examples
 
 See the [examples](examples) directory.
+
+For a publicly available web version please visit
+<https://sbhpass.herokuapp.com>.
 
 ---
 

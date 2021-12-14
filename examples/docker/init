@@ -1,0 +1,28 @@
+#!/bin/bash
+
+NAME="sbh-docker"
+IMAGE="sbh:0.1.0"
+
+cli() {
+	clean
+	docker run -it --name $NAME $IMAGE /bin/sh -c "./sbh $@"
+}
+
+web() {
+	clean
+	docker run -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./sbh -w"
+	echo "Web server is running. Goto http://localhost:9001."
+}
+
+build() {
+	docker build . -t $IMAGE
+}
+
+clean() {
+	if [[ -n $(docker ps -a | grep $NAME) ]]; then
+		docker stop $NAME
+		docker rm $NAME
+	fi
+}
+
+$*

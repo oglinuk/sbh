@@ -20,8 +20,6 @@ var (
 func main() {
 	flag.Parse()
 
-	print("\033[H\033[2J") //clear terminal
-
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Printf("Plaintext: ")
 	scanner.Scan()
@@ -44,8 +42,6 @@ func main() {
 		UppercaseTimes: *uptimes,
 		Symbols:        *symbols,
 	}
-
-	print("\033[H\033[2J")
 
 	if *algorithm == "" {
 		fmt.Println("No algorithm specified with -a, defaulting to sha256 ...")

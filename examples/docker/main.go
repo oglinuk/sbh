@@ -45,7 +45,6 @@ func SBH() {
 		Symbols:        *symbols,
 	}
 
-	print("\033[H\033[2J")
 	if *algorithm == "" {
 		fmt.Println("No algorithm specified with -a, defaulting to sha256 ...")
 	}
@@ -58,8 +57,6 @@ func SBH() {
 
 func main() {
 	flag.Parse()
-
-	print("\033[H\033[2J") //clear terminal
 
 	if *web {
 		PORT := os.Getenv("PORT")

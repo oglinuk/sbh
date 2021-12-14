@@ -1,0 +1,11 @@
+#!/bin/sh
+
+build() {
+	go build -o sbh
+}
+
+clean() {
+	rm sbh
+}
+
+$*
