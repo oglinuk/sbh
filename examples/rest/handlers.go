@@ -3,29 +3,23 @@ package main
 import (
 	"net/http"
 	"strconv"
-	"text/template"
 	"time"
 
 	"github.com/oglinuk/sbh"
 	"github.com/gin-gonic/gin"
 )
 
-type resp struct {
-	SBH            string
-	TimeComplexity time.Duration
-}
-
 func sbhHandler(ctx *gin.Context) {
 	if ctx.Request.Method == "POST" {
 		plaintext := ctx.PostForm("plaintext")
 		nrots, err := strconv.ParseInt(ctx.PostForm("nrots"), 10, 64)
 		if err != nil {
-			http.Error(ctx.Writer, fmt.Errorf("nrots: %s", err.Error()), 500)
+			http.Error(ctx.Writer, err.Error(), 500)
 		}
 
 		seed, err := strconv.ParseInt(ctx.PostForm("seed"), 10, 64)
 		if err != nil {
-			http.Error(ctx.Writer, fmt.Errorf("seed: %s", err.Error()), 500)
+			http.Error(ctx.Writer, err.Error(), 500)
 		}
 
 		algorithm := ctx.PostForm("algorithm")
@@ -37,7 +31,7 @@ func sbhHandler(ctx *gin.Context) {
 			uppercase = true
 			uptimes, err = strconv.ParseInt(ctx.PostForm("uptimes"), 10, 64)
 			if err != nil {
-				http.Error(ctx.Writer, fmt.Errorf("uptimes: %s", err.Error()), 500)
+				http.Error(ctx.Writer, err.Error(), 500)
 			}
 		}
 
@@ -55,20 +49,9 @@ func sbhHandler(ctx *gin.Context) {
 
 		sTime := time.Now()
 
-		if err := tpl.ExecuteTemplate(
-			ctx.Writer,
-			"index.html",
-			resp{sbh.Generate(secbaehash), time.Since(sTime)},
-		); err != nil {
-			http.Error(ctx.Writer, err.Error(), 500)
-		}
-	}
-}
-
-func indexHandler(ctx *gin.Context) {
-	tpl = template.Must(template.ParseGlob("templates/*"))
-	err := tpl.ExecuteTemplate(ctx.Writer, "index.html", nil)
-	if err != nil {
-		http.Error(ctx.Writer, err.Error(), 500)
+		ctx.JSON(http.StatusOK, gin.H{
+			"sbh": sbh.Generate(secbaehash),
+			"time-complexity": time.Since(sTime),
+		})
 	}
 }

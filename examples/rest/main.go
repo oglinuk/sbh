@@ -3,19 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-var (
-	tpl *template.Template
-)
-
 func main() {
-	tpl = template.Must(template.ParseGlob("templates/*"))
-
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "9001"
@@ -26,9 +21,11 @@ func main() {
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowAllOrigins = true
 
-	grouter.GET("/", indexHandler)
+	grouter.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{"response": "success"})
+	})
+
 	grouter.POST("/", sbhHandler)
-	grouter.GET("/sbh", sbhHandler)
 	grouter.Static("/static/", "./static")
 
 	log.Printf("Server is running at 0.0.0.0:%s ...", PORT)

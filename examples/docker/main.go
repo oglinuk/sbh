@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"text/template"
 	"time"
 
 	"github.com/oglinuk/sbh"
@@ -19,6 +20,8 @@ var (
 	uptimes   = flag.Int("ut", 1, "Number of letters to make uppercase")
 	symbols   = flag.String("s", "", "Symbols to add to SBH")
 	web       = flag.Bool("w", false, "Serve SBH over http")
+
+	tpl *template.Template
 )
 
 func SBH() {
@@ -64,18 +67,20 @@ func main() {
 			PORT = "9001"
 		}
 
+		tpl = template.Must(template.ParseGlob("templates/*"))
+
 		grouter := gin.Default()
 
 		corsConfig := cors.DefaultConfig()
 		corsConfig.AllowAllOrigins = true
 
 		grouter.GET("/", indexHandler)
-		grouter.POST("/", sbhHandler)
-		grouter.GET("/sbh", sbhHandler)
+		grouter.POST("/", uiHandler)
+		grouter.POST("/sbh", restHandler)
 		grouter.Static("/static/", "./static")
 
-		log.Printf("Server is running at 0.0.0.0:%s ...", PORT)
-		log.Fatal(grouter.Run(fmt.Sprintf("0.0.0.0:%s", PORT)), nil)
+		log.Printf("Server is running at :%s ...", PORT)
+		log.Fatal(grouter.Run(fmt.Sprintf(":%s", PORT)), nil)
 	} else {
 		SBH()
 	}

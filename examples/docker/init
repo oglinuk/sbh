@@ -2,15 +2,17 @@
 
 NAME="sbh-docker"
 IMAGE="sbh:0.1.0"
+BIN="sbh"
 
 cli() {
 	clean
-	docker run -it --name $NAME $IMAGE /bin/sh -c "./sbh $@"
+	docker run -it --name $NAME $IMAGE /bin/sh -c "./$BIN $@"
 }
 
 web() {
 	clean
-	docker run -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./sbh -w"
+	export GIN_MODE=release
+	docker run -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./$BIN -w"
 	echo "Web server is running. Goto http://localhost:9001."
 }
 

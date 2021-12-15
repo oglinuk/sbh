@@ -31,3 +31,13 @@ or for multiple uppercase letters
 ### Web
 
 `./init web`
+
+goto <http://localhost:9001>
+
+or
+
+```
+curl -X POST http://localhost:9001 \
+	-H "Content-Type: application/json" \
+	-d '{"plaintext": "test", "nrots": "1729", "seed": "42"}'
+```
