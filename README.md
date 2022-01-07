@@ -46,5 +46,4 @@ For a publicly available web version please visit
 * [X] Add ability to add symbols and/or capitalize letters
 * [ ] Add different cipher options
 * [ ] Change letter capitalization
-* [ ] Fix symbols bug with BASH and CLI implementation
 * [ ] Change where symbols are appended based on seed

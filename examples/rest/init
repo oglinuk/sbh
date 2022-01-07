@@ -1,11 +1,11 @@
 #!/bin/sh
 
 build() {
-	go build -o sbh
+	go build main.go handlers.go
 }
 
 clean() {
-	rm sbh
+	rm main
 }
 
 $*

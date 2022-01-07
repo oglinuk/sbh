@@ -1,8 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/oglinuk/sbh"
@@ -11,47 +12,26 @@ import (
 
 func sbhHandler(ctx *gin.Context) {
 	if ctx.Request.Method == "POST" {
-		plaintext := ctx.PostForm("plaintext")
-		nrots, err := strconv.ParseInt(ctx.PostForm("nrots"), 10, 64)
+		var secbaehash sbh.SBH
+
+		err := ctx.BindJSON(&secbaehash)
 		if err != nil {
-			http.Error(ctx.Writer, err.Error(), 500)
+			log.Println(err.Error())
 		}
 
-		seed, err := strconv.ParseInt(ctx.PostForm("seed"), 10, 64)
-		if err != nil {
-			http.Error(ctx.Writer, err.Error(), 500)
+		if secbaehash.Algorithm == "" {
+			secbaehash.Algorithm = "sha256"
 		}
 
-		algorithm := ctx.PostForm("algorithm")
-
-		uppercase := false
-		var uptimes int64
-		uptimes = 0
-		if ctx.PostForm("uppercase") != "" {
-			uppercase = true
-			uptimes, err = strconv.ParseInt(ctx.PostForm("uptimes"), 10, 64)
-			if err != nil {
-				http.Error(ctx.Writer, err.Error(), 500)
-			}
-		}
-
-		symbols := ctx.PostForm("symbols")
-
-		secbaehash := sbh.SBH{
-			Plaintext:      plaintext,
-			NRots:          nrots,
-			Seed:           seed,
-			Algorithm:      algorithm,
-			Uppercase:      uppercase,
-			UppercaseTimes: int(uptimes),
-			Symbols:        symbols,
+		if secbaehash.Uppercase && secbaehash.UppercaseTimes == 0 {
+			secbaehash.UppercaseTimes = 1
 		}
 
 		sTime := time.Now()
 
 		ctx.JSON(http.StatusOK, gin.H{
 			"sbh": sbh.Generate(secbaehash),
-			"time-complexity": time.Since(sTime),
+			"time-complexity": fmt.Sprintf("%s", time.Since(sTime)),
 		})
 	}
 }

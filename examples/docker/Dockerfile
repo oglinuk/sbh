@@ -1,6 +1,6 @@
-FROM golang:1.15.0
-ADD . /go/src/sbh
+FROM golang:1.17.5
 WORKDIR /go/src/sbh
-RUN go get
-RUN go build -o sbh .
+COPY . .
+RUN go mod download
+RUN go build -o sbh
 EXPOSE 9001
