@@ -35,7 +35,12 @@ func sbhHandler(ctx *gin.Context) {
 		uptimes = 0
 		if ctx.PostForm("uppercase") != "" {
 			uppercase = true
-			uptimes, err = strconv.ParseInt(ctx.PostForm("uptimes"), 10, 64)
+			ut := ctx.PostForm("uptimes")
+			if ut == "" {
+				ut = "1"
+			}
+
+			uptimes, err = strconv.ParseInt(ut, 10, 64)
 			if err != nil {
 				http.Error(ctx.Writer, fmt.Errorf("uptimes: %s", err.Error()), 500)
 			}
