@@ -31,7 +31,6 @@ type SBH struct {
 	NRots          int64
 	Seed           int64
 	Algorithm      string
-	Uppercase      bool
 	UppercaseTimes int
 	Symbols        string
 }
@@ -98,12 +97,15 @@ func Generate(secbaehash SBH) string {
 	hasher.Write([]byte(secbaehash.Plaintext))
 	hash := hex.EncodeToString(hasher.Sum(nil))
 
-	if secbaehash.Uppercase {
-		for _, r := range hash {
-			if unicode.IsLetter(r) {
-				hash = strings.Replace(hash, string(r), strings.ToUpper(string(r)), secbaehash.UppercaseTimes)
-				break
-			}
+	c := 0
+	for _, r := range hash {
+		if c >= secbaehash.UppercaseTimes {
+			break
+		}
+
+		if unicode.IsLetter(r) {
+			hash = strings.Replace(hash, string(r), strings.ToUpper(string(r)), 1)
+			c++
 		}
 	}
 
