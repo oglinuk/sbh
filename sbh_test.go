@@ -4,19 +4,37 @@ import "testing"
 
 func getSBH(algorithm, plaintext string, nrots, seed int64) SBH {
 	return SBH{
-		Plaintext:      plaintext,
-		NRots:          nrots,
-		Seed:           seed,
-		Algorithm:      algorithm,
-		Uppercase:      false,
+		Plaintext: plaintext,
+		NRots: nrots,
+		Seed: seed,
+		Algorithm: algorithm,
+		Uppercase: false,
 		UppercaseTimes: 0,
-		Symbols:        "",
+		Symbols: "",
 	}
 }
 
 func TestDefaultSBH(t *testing.T) {
 	result := Generate(getSBH("", "test", 1729, 42))
-	expected := "196a7f528702e5ca85cd0ac664843cfb4bdd615ce5bc384d60db65ee20a30fb2"
+	expected := "505c3c3fab111175642a3073756472621d0312388dec72ee9268c05f96463ecb"
+
+	if result != expected {
+		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
+	}
+}
+
+func TestMD5SBH(t *testing.T) {
+	result := Generate(getSBH("md5", "test", 1729, 42))
+	expected := "57b830ea86331cc8f669202fad3d1850"
+
+	if result != expected {
+		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
+	}
+}
+
+func TestSHA1SBH(t *testing.T) {
+	result := Generate(getSBH("sha1", "test", 1729, 42))
+	expected := "b1add2443ddd007f04484c3736b340c9db743a55"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
@@ -25,7 +43,7 @@ func TestDefaultSBH(t *testing.T) {
 
 func TestSHA256_224SBH(t *testing.T) {
 	result := Generate(getSBH("sha256_224", "test", 1729, 42))
-	expected := "622e0c3884770a643d71a96c257ccf61934bae32d0fc6203ce4ed9e4"
+	expected := "8abc1cdbbc47d3e3876f86fccd0715a956177ea181249621f90a6222"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
@@ -34,7 +52,7 @@ func TestSHA256_224SBH(t *testing.T) {
 
 func TestSHA256SBH(t *testing.T) {
 	result := Generate(getSBH("sha256", "test", 1729, 42))
-	expected := "196a7f528702e5ca85cd0ac664843cfb4bdd615ce5bc384d60db65ee20a30fb2"
+	expected := "505c3c3fab111175642a3073756472621d0312388dec72ee9268c05f96463ecb"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
@@ -43,7 +61,7 @@ func TestSHA256SBH(t *testing.T) {
 
 func TestSHA512_224SBH(t *testing.T) {
 	result := Generate(getSBH("sha512_224", "test", 1729, 42))
-	expected := "f88dc0ca340b51b7b08232a9c374e144e6d39ba460340190e42ef46b"
+	expected := "62ff96f2cab0dc8ce549b0ba9cefe079532bb5143897f4ec7b4b66c9"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
@@ -52,7 +70,7 @@ func TestSHA512_224SBH(t *testing.T) {
 
 func TestSHA512_256SBH(t *testing.T) {
 	result := Generate(getSBH("sha512_256", "test", 1729, 42))
-	expected := "6a19b273eb219d0617b5e81aec263b84186aab22764b0d38890eda3868a4ba1f"
+	expected := "814e45a6755086fe09ac2f52c1412154fa6d5048ff26b27b9393b20149243a9a"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
@@ -61,7 +79,7 @@ func TestSHA512_256SBH(t *testing.T) {
 
 func TestSHA512_384SBH(t *testing.T) {
 	result := Generate(getSBH("sha512_384", "test", 1729, 42))
-	expected := "c3ebc2626671811786db37333b2cf27e960d221e3da10c8cd17935dbb2dc466988d8bde1e0f012209fada77af35abb76"
+	expected := "58014bc206308721b4575ca55800be7a4c54ca7f8c65a35d5b1271dee7e9ce89eaf750eca6af4d4b95aa32448a412490"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
@@ -70,7 +88,7 @@ func TestSHA512_384SBH(t *testing.T) {
 
 func TestSHA512SBH(t *testing.T) {
 	result := Generate(getSBH("sha512", "test", 1729, 42))
-	expected := "d47381726a00d872d9e79859761399d6e601ddd73b5857a571b4c695360f017429648953fc50c58d1cab781a5bfcc5fd8a3958b9d50c241f97195d88a080d6af"
+	expected := "8be80abeb9fa101f7e67b4d7da5ce00b1914e32d361eb67627d6fd4fd85cadf13a0bb079332508f443445a8ce410c1664e9bfcfcd86e6c7ca47cf47d234d7d49"
 
 	if result != expected {
 		t.Fatalf("\nExpected\n%s\nGot\n%v", expected, result)
