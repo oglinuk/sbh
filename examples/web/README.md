@@ -2,10 +2,10 @@
 
 ## Compiling
 
-`go build -o sbh` || `./init build`
+`go build` || `./init build`
 
 ## How to Use
 
-`./sbh`
+`./web`
 
 goto <https://localhost:9001>

@@ -22,7 +22,7 @@ func restHandler(ctx *gin.Context) {
 
 		err := ctx.BindJSON(&secbaehash)
 		if err != nil {
-			ctx.JSON(http.StatusOK, gin.H{
+			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"error": fmt.Sprintf("ctx.BindJSON: %s", err.Error()),
 			})
 			return
@@ -30,10 +30,6 @@ func restHandler(ctx *gin.Context) {
 
 		if secbaehash.Algorithm == "" {
 			secbaehash.Algorithm = "sha256"
-		}
-
-		if secbaehash.Uppercase && secbaehash.UppercaseTimes == 0 {
-			secbaehash.UppercaseTimes = 1
 		}
 
 		sTime := time.Now()
@@ -50,30 +46,27 @@ func uiHandler(ctx *gin.Context) {
 		plaintext := ctx.PostForm("plaintext")
 		nrots, err := strconv.ParseInt(ctx.PostForm("nrots"), 10, 64)
 		if err != nil {
-			http.Error(ctx.Writer, err.Error(), 500)
+			http.Error(ctx.Writer, fmt.Sprintf("nrots: %s", err.Error()), 500)
 		}
 
 		seed, err := strconv.ParseInt(ctx.PostForm("seed"), 10, 64)
 		if err != nil {
-			http.Error(ctx.Writer, err.Error(), 500)
+			http.Error(ctx.Writer, fmt.Sprintf("seed: %s", err.Error()), 500)
 		}
 
 		algorithm := ctx.PostForm("algorithm")
+		if algorithm == "" {
+			algorithm = "sha256"
+		}
 
-		uppercase := false
-		var uptimes int64
-		uptimes = 0
-		if ctx.PostForm("uppercase") != "" {
-			uppercase = true
-			ut := ctx.PostForm("uptimes")
-			if ut == "" {
-				ut = "1"
-			}
+		ut := ctx.PostForm("uppercasetimes")
+		if ut == "" {
+			ut = "0"
+		}
 
-			uptimes, err = strconv.ParseInt(ut, 10, 64)
-			if err != nil {
-				http.Error(ctx.Writer, err.Error(), 500)
-			}
+		uptimes, err := strconv.Atoi(ut)
+		if err != nil {
+			http.Error(ctx.Writer, fmt.Sprintf("uppercasetimes: %s", err.Error()), 500)
 		}
 
 		symbols := ctx.PostForm("symbols")
@@ -83,8 +76,7 @@ func uiHandler(ctx *gin.Context) {
 			NRots:          nrots,
 			Seed:           seed,
 			Algorithm:      algorithm,
-			Uppercase:      uppercase,
-			UppercaseTimes: int(uptimes),
+			UppercaseTimes: uptimes,
 			Symbols:        symbols,
 		}
 

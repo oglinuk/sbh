@@ -12,8 +12,7 @@ import (
 
 var (
 	algorithm = flag.String("a", "", "Hashing algorithm to use, defaults to sha256")
-	uppercase = flag.Bool("u", false, "Make a letter of SBH uppercase")
-	uptimes   = flag.Int("ut", 1, "Number of letters to make uppercase")
+	uptimes   = flag.Int("ut", 0, "Number of letters to make uppercase")
 	symbols   = flag.String("s", "", "Symbols to add to SBH")
 )
 
@@ -38,7 +37,6 @@ func main() {
 		NRots:          nrots,
 		Seed:           seed,
 		Algorithm:      *algorithm,
-		Uppercase:      *uppercase,
 		UppercaseTimes: *uptimes,
 		Symbols:        *symbols,
 	}

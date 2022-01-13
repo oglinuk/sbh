@@ -3,7 +3,7 @@
 {{ template "header" }}
 
 <body>
-	<div class="container-fluid">
+	<div style="padding-left: 1.5%; padding-top: 1.5%" class="container-fluid">
 		<form method="POST">
 			<div class="row">
 				<div class="column">
@@ -19,6 +19,16 @@
 					<input type="text" placeholder="42" name="seed">
 					<br>
 					<br>
+				</div>
+				<div class="column" style="padding-left: 1.5%;">
+					<label for="symbols"><b>(Optional) Symbol(s):</b></label><br>
+					<input type="text" placeholder="!" name="symbols">
+					<br>
+					<br>
+					<label for="uppercasetimes"><b>(Optional) Number of Uppercase Letters:</b></label><br>
+					<input type="text" placeholder="1" name="uppercasetimes">
+					<br>
+					<br>
 					<label for="algorithm"><b>Algorithm:</b></label>
 					<select name="algorithm">
 						<option value="sha256">sha256</option>
@@ -31,30 +41,16 @@
 						<option value="sha512">sha512</option>
 					</select>
 				</div>
-				<div class="column" style="padding-left: 1.5%;">
-					<label for="symbols"><b>(Optional) Symbol(s):</b></label><br>
-					<input type="text" placeholder="!" name="symbols">
-					<br>
-					<br>
-					<br>
-					<label for="uppercase"><b>(Optional) Add Uppercase:</b></label>
-					<input type="checkbox" name="uppercase">
-					<br>
-					<br>
-					<br>
-					<label for="uptimes"><b>(Optional) Number of uptimes:</b></label><br>
-					<input type="text" placeholder="1" name="uptimes">
-				</div>
 			</div>
 			<br>
 			<input type="submit">
 		</form>
 		<br>
-        <br>
-        <a href="https://github.com/oglinuk/sbh">SBH</a>: {{ .SBH }}
-        <br>
-        <a href="https://en.wikipedia.org/wiki/Time_complexity">Time complexity</a>: <b>{{ .TimeComplexity }}</b>
-        <br>
+    <br>
+    <a href="https://github.com/oglinuk/sbh">SBH</a>: {{ .SBH }}
+    <br>
+    <a href="https://en.wikipedia.org/wiki/Time_complexity">Time complexity</a>: <b>{{ .TimeComplexity }}</b>
+    <br>
 	</div>
 </body>
 

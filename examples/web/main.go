@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"text/template"
 
 	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"

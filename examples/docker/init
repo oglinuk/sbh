@@ -12,7 +12,7 @@ cli() {
 web() {
 	clean
 	export GIN_MODE=release
-	docker run -d -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./$BIN -w"
+	docker run -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./$BIN -w"
 	echo "Web server is running. Goto http://localhost:9001."
 }
 

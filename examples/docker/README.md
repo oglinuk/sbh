@@ -18,11 +18,7 @@
 
 ##### W/ Uppercase
 
-`./init cli "-u"`
-
-or for multiple uppercase letters
-
-`./init cli "-u -ut 3"`
+`./init cli "-ut 3"`
 
 ##### W/ Symbol(s)
 
@@ -39,25 +35,25 @@ or
 send a POST request using `cURL`
 
 ```BASH
-curl -X POST http://localhost:9001 \
+curl -X POST http://localhost:9001/sbh \
 	-H "Content-Type: application/json" \
 	-d '{"plaintext": "test", "nrots": 1729, "seed": 42}'
 ```
 
 ```BASH
-curl -X POST http://localhost:9001 \
+curl -X POST http://localhost:9001/sbh \
 	-H "Content-Type: application/json" \
 	-d '{"plaintext": "test", "nrots": 1729, "seed": 42, "algorithm": "md5"}'
 ```
 
 ```BASH
-curl -X POST http://localhost:9001 \
+curl -X POST http://localhost:9001/sbh \
 	-H "Content-Type: application/json" \
 	-d '{"plaintext": "test", "nrots": 1729, "seed": 42, "algorithm": "md5", "uppercase": true}'
 ```
 
 ```BASH
-curl -X POST http://localhost:9001 \
+curl -X POST http://localhost:9001/sbh \
 	-H "Content-Type: application/json" \
 	-d '{"plaintext": "test", "nrots": 1729, "seed": 42, "algorithm": "md5", "uppercase": true, "uppercasetimes": 3}'
 ```

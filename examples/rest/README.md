@@ -2,11 +2,11 @@
 
 ## Compile
 
-`go build main.go handlers.go` || `./init build`
+`go build` || `./init build`
 
 ## How to Use
 
-`./main`
+`./rest`
 
 send a POST request using `cURL`
 
