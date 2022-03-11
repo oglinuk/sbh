@@ -1,8 +1,6 @@
 package sbh
 
 import (
-	"crypto/md5"
-	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/hex"
@@ -33,14 +31,13 @@ type SBH struct {
 	Algorithm      string
 	UppercaseTimes int
 	Symbols        string
+	Length         int
 }
 
-// getHasher returns the corresponding cryptographic hash function for the
-// given algorithm. If a non-existing algorithm is given, default to sha256.
+// getHasher returns the corresponding hash function for the given
+// algorithm. If a non-existing algorithm is given, default to sha256.
 func getHasher(algorithm string) hash.Hash {
 	hashers := make(map[string]hash.Hash)
-	hashers["md5"] = md5.New()
-	hashers["sha1"] = sha1.New()
 	hashers["sha256_224"] = sha256.New224()
 	hashers["sha256"] = sha256.New()
 	hashers["sha512_224"] = sha512.New512_224()
@@ -81,12 +78,11 @@ func caesarCipher(r int64, s string) string {
 	return strings.Join(str, "")
 }
 
-// Generate a hash using a caesarCipher with the specified
-// hashing Algorithm. A pseudo-random rot is generated based
-// on given Seed for number of rotations (NRots) specified.
-// If Uppercase is set to true, capitalize the first rune
-// that IsLetter for UppercaseTimes. If Symbols are given,
-// append them to the hash.
+// Generate sets the rng seed with SBH.Seed, then applies a caesarCipher
+// for the number of times specified by SBH.NRots. The resulting string
+// is then trimmed to the specified SBH.Length. Replace each letter with
+// an uppercase value for SBH.UppercaseTimes. Finally append any
+// SBH.Symbols and return the result.
 func Generate(secbaehash SBH) string {
 	rand.Seed(secbaehash.Seed)
 	for i := 0; i < int(secbaehash.NRots); i++ {
@@ -96,6 +92,14 @@ func Generate(secbaehash SBH) string {
 	hasher := getHasher(secbaehash.Algorithm)
 	hasher.Write([]byte(secbaehash.Plaintext))
 	hash := hex.EncodeToString(hasher.Sum(nil))
+
+	if secbaehash.Length == 0 {
+		secbaehash.Length = len(hash)
+	}
+
+	secbaehash.Length -= len(secbaehash.Symbols)
+
+	hash = hash[:secbaehash.Length]
 
 	c := 0
 	for _, r := range hash {
