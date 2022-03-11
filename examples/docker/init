@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 NAME="sbh-docker"
 IMAGE="sbh:0.1.0"
@@ -12,8 +12,8 @@ cli() {
 web() {
 	clean
 	export GIN_MODE=release
-	docker run -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./$BIN -w"
 	echo "Web server is running. Goto http://localhost:9001."
+	docker run -d -p 9001:9001 --name $NAME $IMAGE /bin/sh -c "./$BIN -w"
 }
 
 build() {
@@ -27,4 +27,4 @@ clean() {
 	fi
 }
 
-$*
+"$@"

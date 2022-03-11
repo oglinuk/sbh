@@ -6,5 +6,3 @@
 * [X] Create docker implementation
 * [X] Create web UI implementation
 * [X] Create REST API implementation
-* [ ] Create browser extension
-* [ ] Create mobile app

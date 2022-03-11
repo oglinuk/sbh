@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/oglinuk/sbh"
 	"github.com/gin-gonic/gin"
+	"github.com/oglinuk/sbh"
 )
 
 func sbhHandler(ctx *gin.Context) {
@@ -26,7 +26,7 @@ func sbhHandler(ctx *gin.Context) {
 		sTime := time.Now()
 
 		ctx.JSON(http.StatusOK, gin.H{
-			"sbh": sbh.Generate(secbaehash),
+			"sbh":             sbh.Generate(secbaehash),
 			"time-complexity": fmt.Sprintf("%s", time.Since(sTime)),
 		})
 	}

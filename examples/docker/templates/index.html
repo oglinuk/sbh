@@ -19,6 +19,10 @@
 					<input type="text" placeholder="42" name="seed">
 					<br>
 					<br>
+					<label for="length"><b>Length:</b></label><br>
+					<input type="text" placeholder="12" name="length">
+					<br>
+					<br>
 				</div>
 				<div class="column" style="padding-left: 1.5%;">
 					<label for="symbols"><b>(Optional) Symbol(s):</b></label><br>
@@ -49,7 +53,7 @@
     <br>
     <a href="https://github.com/oglinuk/sbh">SBH</a>: {{ .SBH }}
     <br>
-    <a href="https://en.wikipedia.org/wiki/Time_complexity">Time complexity</a>: <b>{{ .TimeComplexity }}</b>
+    Time took: <b>{{ .TimeTook }}</b>
     <br>
 	</div>
 </body>

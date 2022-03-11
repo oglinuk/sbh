@@ -8,43 +8,52 @@ import (
 	"time"
 
 	"github.com/oglinuk/sbh"
-	"github.com/gin-gonic/gin"
 )
 
 type resp struct {
-	SBH            string
-	TimeComplexity time.Duration
+	SBH      string
+	TimeTook time.Duration
 }
 
-func sbhHandler(ctx *gin.Context) {
-	if ctx.Request.Method == "POST" {
-		plaintext := ctx.PostForm("plaintext")
-		nrots, err := strconv.ParseInt(ctx.PostForm("nrots"), 10, 64)
+func sbhHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		plaintext := r.FormValue("plaintext")
+		nrots, err := strconv.ParseInt(r.FormValue("nrots"), 10, 64)
 		if err != nil {
-			http.Error(ctx.Writer, fmt.Sprintf("nrots: %s", err.Error()), 500)
+			http.Error(w, fmt.Sprintf("nrots: %s", err.Error()), 500)
 		}
 
-		seed, err := strconv.ParseInt(ctx.PostForm("seed"), 10, 64)
+		seed, err := strconv.ParseInt(r.FormValue("seed"), 10, 64)
 		if err != nil {
-			http.Error(ctx.Writer, fmt.Sprintf("seed: %s", err.Error()), 500)
+			http.Error(w, fmt.Sprintf("seed: %s", err.Error()), 500)
 		}
 
-		algorithm := ctx.PostForm("algorithm")
+		algorithm := r.FormValue("algorithm")
 		if algorithm == "" {
 			algorithm = "sha256"
 		}
 
-		ut := ctx.PostForm("uppercasetimes")
+		ut := r.FormValue("uppercasetimes")
 		if ut == "" {
 			ut = "0"
 		}
 
 		uptimes, err := strconv.Atoi(ut)
 		if err != nil {
-			http.Error(ctx.Writer, fmt.Sprintf("uppercasetimes: %s", err.Error()), 500)
+			http.Error(w, fmt.Sprintf("uppercasetimes: %s", err.Error()), 500)
 		}
 
-		symbols := ctx.PostForm("symbols")
+		symbols := r.FormValue("symbols")
+
+		l := r.FormValue("length")
+		if l == "" {
+			l = "0"
+		}
+
+		length, err := strconv.Atoi(l)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("length: %s", err.Error()), 500)
+		}
 
 		secbaehash := sbh.SBH{
 			Plaintext:      plaintext,
@@ -53,24 +62,25 @@ func sbhHandler(ctx *gin.Context) {
 			Algorithm:      algorithm,
 			UppercaseTimes: uptimes,
 			Symbols:        symbols,
+			Length:         length,
 		}
 
 		sTime := time.Now()
 
 		if err := tpl.ExecuteTemplate(
-			ctx.Writer,
+			w,
 			"index.html",
 			resp{sbh.Generate(secbaehash), time.Since(sTime)},
 		); err != nil {
-			http.Error(ctx.Writer, err.Error(), 500)
+			http.Error(w, err.Error(), 500)
 		}
 	}
 }
 
-func indexHandler(ctx *gin.Context) {
+func indexHandler(w http.ResponseWriter, r *http.Request) {
 	tpl = template.Must(template.ParseGlob("templates/*"))
-	err := tpl.ExecuteTemplate(ctx.Writer, "index.html", nil)
+	err := tpl.ExecuteTemplate(w, "index.html", nil)
 	if err != nil {
-		http.Error(ctx.Writer, err.Error(), 500)
+		http.Error(w, err.Error(), 500)
 	}
 }

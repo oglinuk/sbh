@@ -4,7 +4,7 @@
 
 <body>
 	<div style="padding-left: 1.5%; padding-top: 1.5%" class="container-fluid">
-		<form method="POST">
+		<form method="POST" action="/sbh">
 			<div class="row">
 				<div class="column">
 					<label for="plaintext"><b>Plaintext:</b></label><br>
@@ -17,6 +17,10 @@
 					<br>
 					<label for="seed"><b>Seed:</b></label><br>
 					<input type="text" placeholder="42" name="seed">
+					<br>
+					<br>
+					<label for="length"><b>Length:</b></label><br>
+					<input type="text" placeholder="12" name="length">
 					<br>
 					<br>
 				</div>
@@ -49,7 +53,7 @@
     <br>
     <a href="https://github.com/oglinuk/sbh">SBH</a>: {{ .SBH }}
     <br>
-    <a href="https://en.wikipedia.org/wiki/Time_complexity">Time complexity</a>: <b>{{ .TimeComplexity }}</b>
+    Time took: <b>{{ .TimeTook }}</b>
     <br>
 	</div>
 </body>

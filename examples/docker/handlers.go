@@ -7,13 +7,13 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/oglinuk/sbh"
 	"github.com/gin-gonic/gin"
+	"github.com/oglinuk/sbh"
 )
 
 type resp struct {
-	SBH            string
-	TimeComplexity time.Duration
+	SBH      string
+	TimeTook time.Duration
 }
 
 func restHandler(ctx *gin.Context) {
@@ -35,8 +35,8 @@ func restHandler(ctx *gin.Context) {
 		sTime := time.Now()
 
 		ctx.JSON(http.StatusOK, gin.H{
-			"sbh": sbh.Generate(secbaehash),
-			"time-complexity": time.Since(sTime),
+			"sbh":       sbh.Generate(secbaehash),
+			"time-took": time.Since(sTime),
 		})
 	}
 }
@@ -71,6 +71,16 @@ func uiHandler(ctx *gin.Context) {
 
 		symbols := ctx.PostForm("symbols")
 
+		l := ctx.PostForm("length")
+		if l == "" {
+			l = "0"
+		}
+
+		length, err := strconv.Atoi(l)
+		if err != nil {
+			http.Error(ctx.Writer, fmt.Sprintf("length: %s", err.Error()), 500)
+		}
+
 		secbaehash := sbh.SBH{
 			Plaintext:      plaintext,
 			NRots:          nrots,
@@ -78,6 +88,7 @@ func uiHandler(ctx *gin.Context) {
 			Algorithm:      algorithm,
 			UppercaseTimes: uptimes,
 			Symbols:        symbols,
+			Length:         length,
 		}
 
 		sTime := time.Now()

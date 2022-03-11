@@ -1,11 +1,7 @@
 # Web Implementation
 
-## Compiling
-
-`go build` || `./init build`
-
 ## How to Use
 
-`./web`
+`go build && ./web`
 
 goto <https://localhost:9001>

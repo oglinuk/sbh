@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"text/template"
-
-	"github.com/gin-gonic/contrib/cors"
-	"github.com/gin-gonic/gin"
+	//"github.com/gin-gonic/contrib/cors"
+	//"github.com/gin-gonic/gin"
 )
 
 var (
@@ -22,16 +22,12 @@ func main() {
 		PORT = "9001"
 	}
 
-	grouter := gin.Default()
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/sbh", sbhHandler)
 
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowAllOrigins = true
-
-	grouter.GET("/", indexHandler)
-	grouter.POST("/", sbhHandler)
-	grouter.GET("/sbh", sbhHandler)
-	grouter.Static("/static/", "./static")
+	httpFS := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", httpFS))
 
 	log.Printf("Server is running at 0.0.0.0:%s ...", PORT)
-	log.Fatal(grouter.Run(fmt.Sprintf("0.0.0.0:%s", PORT)), nil)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", PORT), nil))
 }

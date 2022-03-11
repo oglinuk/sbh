@@ -1,4 +1,4 @@
-module example.com/docker-sbh
+module example.com/rest
 
 go 1.17
 
