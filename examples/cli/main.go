@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"time"
+	"strings"
 
 	"github.com/oglinuk/sbh"
 )
@@ -17,9 +18,16 @@ var (
 	length    = flag.Int("l", 0, "Length of the returned string")
 )
 
-func main() {
-	flag.Parse()
+func doAgain() bool {
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Printf("\nGenerate another? [y/N]: ")
+	scanner.Scan()
+	again := strings.ToLower(scanner.Text())
 
+	return again == "y"
+}
+
+func genSBH() {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Printf("Plaintext: ")
 	scanner.Scan()
@@ -51,4 +59,20 @@ func main() {
 
 	fmt.Printf("SBH: %s\nElapsed time: %v\n",
 		sbh.Generate(secbaehash), time.Since(sTime))
+
+	scanner.Scan()
 }
+
+func main() {
+	flag.Parse()
+
+	cont := true
+	for {
+		if !cont {
+			break
+		}
+		genSBH()
+		cont = doAgain()
+	}
+}
+
